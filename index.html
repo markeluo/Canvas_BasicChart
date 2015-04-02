@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义Canvas实时图表</title>
+    <style type="text/css">
+        .chartcontentsty{
+            margin: 0px auto;
+            width: 800px;
+            height: 550px;
+        }
+    </style>
+</head>
+<body>
+<div id="chartcontent" class="chartcontentsty">
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/WLChart.js"></script>
+<script type="text/javascript">
+    var chartoptions =
+    {
+        container: "chartcontent",
+        type:"column",//类型,line/spline/area/column
+        border:{
+            width:1,
+            color:"#dcdcdc"
+        },//边框
+        backgroundcolor:"#ffffff",
+        padding:{
+            left:80,
+            right:20,
+            top:20,
+            bottom:60
+        },
+        linewidth:0,//线条宽度
+        linecolor:"#28c4a5",//线条颜色
+        marker:{
+            label:{
+                enabled:true,
+                fontcolor:"#666666",
+                fontsty:"6px Arial"
+            },
+            color:"#3aa15a",
+            border:{
+                color:"#28c4a5",
+                width:1
+            }
+        },//marker点标记
+        minmax:null,//X,Y最小最大值
+        xasix:{
+            xtype:"string",//y轴类型
+            tickinterval:3,//刻度间隔
+            linecolor:"#000000",
+            linewidth:1,
+            tickcolor:"#666666",//刻度颜色
+            ticklength:5,
+            tickwidth:1,
+            label:{
+                fontcolor:"#666666",
+                fontsty:"6px Arial",
+                float:0
+            },
+            gridline:{
+                color:"#dcdcdc",
+                width:1,
+                style:"solid"
+            },
+            items:null
+        },//x轴设置
+        yasix:{
+            tickcolor:"#666666",//刻度颜色
+            ticklength:5,
+            tickwidth:1,
+            linecolor:"#000000",
+            linewidth:1,
+            label:{
+                fontcolor:"#666666",
+                fontsty:"6px Arial",
+                float:2
+            },
+            gridline:{
+                color:"#dcdcdc",
+                width:1,
+                style:"solid"
+            },
+            items:null
+        },//y轴设置
+        tooltips:{
+            border:{
+                width:1,
+                color:"#f08217"
+            },
+            backgroundcolor:"#ffffff",
+            fontsty:"6px Arial",
+            color:"#666666"
+        },
+        standline:{
+            ucl:[],//item:{name:"",value:"",color:""}
+            lcl:[]
+        }//标准线
+    };
+    var chart=new WLChart(chartoptions);
+    setInterval("myInterval()",1000);//1000为1秒钟
+    function myInterval()
+    {
+            var Data=chart.options.data;
+            Data.shift(0,1);
+            Data.push([(parseInt(Data[Data.length-1])+1),crandom(30,85)]);
+            chart.DataUpdate(Data);
+    }
+
+    function crandom(n,m){
+        var c = m-n+1;
+        return  Math.floor(Math.random() * c + n);
+    }
+
+</script>
